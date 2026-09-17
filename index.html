@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <title>معلومات الجهاز</title>
+</head>
+
+<body>
+  <h1>معلومات الجهاز</h1>
+
+  <p>المتصفح: <span id="browser"></span></p>
+  <p>النظام: <span id="os"></span></p>
+  <p>اللغة: <span id="language"></span></p>
+  <p>المنطقة الزمنية: <span id="timezone"></span></p>
+  <p>دقة الشاشة: <span id="screen"></span></p>
+  <p>حجم النافذة: <span id="window"></span></p>
+  <p>أنوية المعالج المعلنة: <span id="cpu"></span></p>
+  <p>الاتصال بالإنترنت: <span id="online"></span></p>
+
+  <script>
+    document.getElementById("browser").textContent =
+      navigator.userAgent;
+
+    document.getElementById("os").textContent =
+      navigator.platform;
+
+    document.getElementById("language").textContent =
+      navigator.language;
+
+    document.getElementById("timezone").textContent =
+      Intl.DateTimeFormat().resolvedOptions().timeZone;
+
+    document.getElementById("screen").textContent =
+      screen.width + " × " + screen.height;
+
+    document.getElementById("window").textContent =
+      window.innerWidth + " × " + window.innerHeight;
+
+    document.getElementById("cpu").textContent =
+      navigator.hardwareConcurrency || "غير متاح";
+
+    document.getElementById("online").textContent =
+      navigator.onLine ? "متصل" : "غير متصل";
+  </script>
+</body>
+</html>
