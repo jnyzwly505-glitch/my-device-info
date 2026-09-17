@@ -2,45 +2,48 @@
 <html lang="ar" dir="rtl">
 <head>
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>معلومات الجهاز</title>
 </head>
 
 <body>
-  <h1>معلومات الجهاز</h1>
+  <h1>معلومات جهازي</h1>
 
-  <p>المتصفح: <span id="browser"></span></p>
-  <p>النظام: <span id="os"></span></p>
-  <p>اللغة: <span id="language"></span></p>
-  <p>المنطقة الزمنية: <span id="timezone"></span></p>
-  <p>دقة الشاشة: <span id="screen"></span></p>
-  <p>حجم النافذة: <span id="window"></span></p>
-  <p>أنوية المعالج المعلنة: <span id="cpu"></span></p>
-  <p>الاتصال بالإنترنت: <span id="online"></span></p>
+  <p>اضغط الزر لإرسال معلومات جهازك.</p>
+  <button id="send">إرسال معلومات جهازي</button>
+  <p id="status"></p>
 
   <script>
-    document.getElementById("browser").textContent =
-      navigator.userAgent;
+    const worker =
+      "https://spring-firefly-235d.jnyzwly505.workers.dev/info";
 
-    document.getElementById("os").textContent =
-      navigator.platform;
+    document.getElementById("send").onclick = async () => {
+      const data = {
+        browser: navigator.userAgent,
+        os: navigator.platform,
+        language: navigator.language,
+        screen: `${screen.width} × ${screen.height}`,
+        timezone: Intl.DateTimeFormat().resolvedOptions().timeZone
+      };
 
-    document.getElementById("language").textContent =
-      navigator.language;
+      try {
+        const response = await fetch(worker, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify(data)
+        });
 
-    document.getElementById("timezone").textContent =
-      Intl.DateTimeFormat().resolvedOptions().timeZone;
-
-    document.getElementById("screen").textContent =
-      screen.width + " × " + screen.height;
-
-    document.getElementById("window").textContent =
-      window.innerWidth + " × " + window.innerHeight;
-
-    document.getElementById("cpu").textContent =
-      navigator.hardwareConcurrency || "غير متاح";
-
-    document.getElementById("online").textContent =
-      navigator.onLine ? "متصل" : "غير متصل";
+        document.getElementById("status").textContent =
+          response.ok
+            ? "تم إرسال المعلومات بنجاح ✅"
+            : "حدث خطأ أثناء الإرسال ❌";
+      } catch (error) {
+        document.getElementById("status").textContent =
+          "تعذر الاتصال بالسيرفر ❌";
+      }
+    };
   </script>
 </body>
 </html>
