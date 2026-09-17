@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <title>معلومات جهازي</title>
+  <style>
+    body {
+      font-family: Arial;
+      background: #111827;
+      color: white;
+      padding: 30px;
+    }
+
+    .box {
+      background: #1f2937;
+      padding: 15px;
+      margin: 10px 0;
+      border-radius: 10px;
+    }
+
+    b {
+      color: #60a5fa;
+    }
+  </style>
+</head>
+
+<body>
+  <h1>🔍 معلومات المتصفح والجهاز</h1>
+
+  <div class="box"><b>المتصفح:</b> <span id="browser"></span></div>
+  <div class="box"><b>النظام:</b> <span id="os"></span></div>
+  <div class="box"><b>لغة الجهاز:</b> <span id="language"></span></div>
+  <div class="box"><b>المنطقة الزمنية:</b> <span id="timezone"></span></div>
+  <div class="box"><b>دقة الشاشة:</b> <span id="screen"></span></div>
+  <div class="box"><b>حجم نافذة المتصفح:</b> <span id="window"></span></div>
+  <div class="box"><b>أنوية المعالج المعلنة:</b> <span id="cpu"></span></div>
+  <div class="box"><b>حالة الاتصال:</b> <span id="online"></span></div>
+
+  <script>
+    document.getElementById("browser").textContent = navigator.userAgent;
+    document.getElementById("os").textContent = navigator.platform;
+    document.getElementById("language").textContent = navigator.language;
+    document.getElementById("timezone").textContent =
+      Intl.DateTimeFormat().resolvedOptions().timeZone;
+
+    document.getElementById("screen").textContent =
+      screen.width + " × " + screen.height;
+
+    document.getElementById("window").textContent =
+      window.innerWidth + " × " + window.innerHeight;
+
+    document.getElementById("cpu").textContent =
+      navigator.hardwareConcurrency || "غير متاح";
+
+    document.getElementById("online").textContent =
+      navigator.onLine ? "متصل" : "غير متصل";
+  </script>
+</body>
+</html>
